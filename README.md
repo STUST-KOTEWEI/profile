@@ -58,3 +58,5 @@ AI / ML 框架： TensorFlow, PyTorch, Scikit-learn
 Email: 4b4g0077@stust.edu.tw / 4b4g0077@office.stust.edu.tw
 
 電話: 0981614900
+
+GitHUB:https://github.com/STUST-KOTEWEI
