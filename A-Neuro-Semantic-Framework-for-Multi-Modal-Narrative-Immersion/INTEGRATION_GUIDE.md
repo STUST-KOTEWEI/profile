@@ -1,5 +1,4 @@
-"""
-Integration Guide for Deep Semantic Analysis Module
+# Integration Guide for Deep Semantic Analysis Module
 
 This document provides guidance on integrating the semantic analysis module
 into larger systems for multi-modal narrative immersion.
@@ -284,4 +283,3 @@ To add new analyzers or enhance existing ones:
 3. Add batch processing support
 4. Update the main SemanticAnalyzer to include your analyzer
 5. Add tests and documentation
-"""
