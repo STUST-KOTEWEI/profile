@@ -133,8 +133,9 @@ class ContextAnalyzer:
         theme_scores = {}
         
         for theme, keywords in self.context_patterns['themes'].items():
-            count = sum(1 for keyword in keywords if keyword in text_lower)
-            theme_scores[theme] = min(count / len(keywords), 1.0)
+            if len(keywords) > 0:
+                count = sum(1 for keyword in keywords if keyword in text_lower)
+                theme_scores[theme] = min(count / len(keywords), 1.0)
         
         # Filter out themes with zero score
         return {theme: score for theme, score in theme_scores.items() if score > 0}

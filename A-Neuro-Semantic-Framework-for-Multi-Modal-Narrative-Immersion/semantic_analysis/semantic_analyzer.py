@@ -3,6 +3,7 @@ Main Semantic Analyzer module that coordinates all semantic analysis components.
 """
 
 from typing import Dict, List, Any
+import re
 from .sentiment_analyzer import SentimentAnalyzer
 from .tone_analyzer import ToneAnalyzer
 from .relationship_extractor import RelationshipExtractor
@@ -67,8 +68,6 @@ class SemanticAnalyzer:
         Returns:
             List of semantic units with metadata
         """
-        import re
-        
         # Split into sentences using common sentence delimiters
         sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]

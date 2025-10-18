@@ -2,7 +2,7 @@
 Character relationship extraction module.
 """
 
-from typing import Dict, List, Any, Tuple
+from typing import Dict, List, Any
 import re
 
 
