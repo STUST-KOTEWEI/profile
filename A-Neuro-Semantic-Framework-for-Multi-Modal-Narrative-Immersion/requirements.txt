@@ -1,0 +1,15 @@
+# Deep Semantic Analysis Module Requirements
+# For Multi-Modal Narrative Immersion Project
+
+# Core NLP libraries
+transformers>=4.30.0
+torch>=2.0.0
+sentencepiece>=0.1.99
+
+# Optional dependencies for enhanced functionality
+# Uncomment if needed:
+# spacy>=3.5.0
+# nltk>=3.8.0
+
+# Utility libraries
+numpy>=1.24.0
