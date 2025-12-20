@@ -2,6 +2,7 @@
 Sentiment Analysis module using Hugging Face Transformers.
 """
 
+import os
 from typing import Dict, Any, List
 
 
@@ -26,11 +27,24 @@ class SentimentAnalyzer:
     
     def _initialize_model(self):
         """Lazy initialization of the sentiment analysis pipeline."""
+        # Skip model loading if running offline or if explicitly disabled
+        if os.environ.get('HF_HUB_OFFLINE', '0') == '1' or \
+           os.environ.get('TRANSFORMERS_OFFLINE', '0') == '1':
+            self.pipeline = None
+            return
+            
         try:
             from transformers import pipeline
+            # Set a short timeout for connection attempts
             self.pipeline = pipeline("sentiment-analysis", model=self.model_name)
         except ImportError:
-            # Fallback to simple rule-based analysis if transformers not available
+            # transformers library not available
+            self.pipeline = None
+        except (OSError, ConnectionError, TimeoutError, RuntimeError) as e:
+            # Model loading failed (e.g., no internet connection, model not found)
+            self.pipeline = None
+        except ValueError:
+            # Invalid model configuration
             self.pipeline = None
     
     def analyze(self, text: str) -> Dict[str, Any]:
