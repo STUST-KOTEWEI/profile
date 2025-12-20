@@ -32,6 +32,9 @@ class SentimentAnalyzer:
         except ImportError:
             # Fallback to simple rule-based analysis if transformers not available
             self.pipeline = None
+        except (OSError, ConnectionError, TimeoutError):
+            # Fallback for network errors (offline mode)
+            self.pipeline = None
     
     def analyze(self, text: str) -> Dict[str, Any]:
         """
