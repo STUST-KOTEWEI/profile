@@ -52,6 +52,18 @@ This module provides comprehensive Natural Language Processing (NLP) capabilitie
 - 圖結構生成
 - 支持 GraphML 和 Cypher 輸出
 
+### 9. 時間軸追蹤 (Timeline Tracking) 🆕
+- 時間標記檢測（過去、現在、未來）
+- 事件提取與排序
+- 敘事時間結構分析
+- 支持 Mermaid 圖表輸出
+
+### 10. 進階命名實體識別 (Advanced NER) 🆕
+- 多類型實體識別（人物、地點、組織、日期、時間等）
+- 上下文感知的實體辨識
+- 基本共指消解
+- 支持 IOB2 格式輸出
+
 ## 安裝 (Installation)
 
 ### 基本安裝
@@ -215,10 +227,10 @@ semantic_analysis/
 
 - [ ] 整合更多預訓練的 Transformer 模型
 - [x] 添加多語言支持（中文、日文等）✅ v1.1.0
-- [ ] 實現更精確的命名實體識別（NER）
+- [x] 實現更精確的命名實體識別（NER）✅ v1.2.0
 - [x] 添加對話分析功能 ✅ v1.1.0
 - [ ] 支持更複雜的關係圖譜
-- [ ] 添加時間軸追蹤
+- [x] 添加時間軸追蹤 ✅ v1.2.0
 - [x] 整合知識圖譜 ✅ v1.1.0
 
 ## 貢獻 (Contributing)

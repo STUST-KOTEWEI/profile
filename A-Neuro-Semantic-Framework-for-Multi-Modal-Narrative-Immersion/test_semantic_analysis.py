@@ -191,6 +191,8 @@ def run_all_tests():
         test_multilingual()
         test_dialogue_analyzer()
         test_knowledge_graph()
+        test_timeline_tracker()
+        test_entity_recognizer()
         
         print("="*70)
         print("ALL TESTS PASSED SUCCESSFULLY! ✓")
@@ -308,6 +310,76 @@ def test_knowledge_graph():
         print("  ✓ GraphML export test skipped (no nodes)")
     
     print("KnowledgeGraphBuilder: ALL TESTS PASSED\n")
+
+
+def test_timeline_tracker():
+    """Test timeline tracking functionality."""
+    print("Testing TimelineTracker...")
+    from semantic_analysis import TimelineTracker
+    
+    tracker = TimelineTracker()
+    
+    # Test with narrative text containing temporal markers
+    text = '''
+    Once upon a time, Alice lived in a small village.
+    Yesterday, she discovered a mysterious rabbit hole.
+    Then she fell down and found herself in Wonderland.
+    Later that evening, she met the Mad Hatter at his tea party.
+    Finally, after many adventures, she found her way home.
+    '''
+    
+    result = tracker.analyze(text)
+    assert 'temporal_markers' in result
+    assert 'events' in result
+    assert 'timeline' in result
+    assert 'time_structure' in result
+    assert 'statistics' in result
+    print("  ✓ Timeline analysis test passed")
+    
+    # Test temporal marker extraction
+    markers = tracker.extract_temporal_markers(text)
+    assert isinstance(markers, list)
+    print("  ✓ Temporal marker extraction test passed")
+    
+    # Test with minimal temporal text
+    result = tracker.analyze("The cat sat on the mat.")
+    assert result is not None
+    print("  ✓ Minimal temporal text test passed")
+    
+    print("TimelineTracker: ALL TESTS PASSED\n")
+
+
+def test_entity_recognizer():
+    """Test entity recognition functionality."""
+    print("Testing EntityRecognizer...")
+    from semantic_analysis import EntityRecognizer
+    
+    recognizer = EntityRecognizer()
+    
+    # Test with narrative text containing various entities
+    text = '''
+    Dr. Smith traveled to Paris in January 2024.
+    He met Professor Johnson at the University of Oxford.
+    The company Microsoft was founded in America.
+    '''
+    
+    result = recognizer.recognize(text)
+    assert 'entities' in result
+    assert 'entities_by_type' in result
+    assert 'statistics' in result
+    print("  ✓ Entity recognition test passed")
+    
+    # Test entity extraction
+    entities = recognizer.extract_entities(text)
+    assert isinstance(entities, list)
+    print("  ✓ Entity extraction test passed")
+    
+    # Test with simple text
+    result = recognizer.recognize("Hello world.")
+    assert result is not None
+    print("  ✓ Simple text test passed")
+    
+    print("EntityRecognizer: ALL TESTS PASSED\n")
 
 
 if __name__ == "__main__":

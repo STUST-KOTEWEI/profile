@@ -10,6 +10,8 @@ This module provides NLP-based semantic analysis capabilities including:
 - Multi-language support (Chinese, Japanese, Korean, English)
 - Dialogue analysis
 - Knowledge graph construction
+- Timeline tracking and temporal analysis
+- Advanced Named Entity Recognition (NER)
 """
 
 from .semantic_analyzer import SemanticAnalyzer
@@ -20,6 +22,8 @@ from .context_analyzer import ContextAnalyzer
 from .multilingual import LanguageDetector, MultilingualAnalyzer
 from .dialogue_analyzer import DialogueAnalyzer
 from .knowledge_graph import KnowledgeGraphBuilder
+from .timeline_tracker import TimelineTracker
+from .entity_recognizer import EntityRecognizer
 
 __all__ = [
     'SemanticAnalyzer',
@@ -30,7 +34,9 @@ __all__ = [
     'LanguageDetector',
     'MultilingualAnalyzer',
     'DialogueAnalyzer',
-    'KnowledgeGraphBuilder'
+    'KnowledgeGraphBuilder',
+    'TimelineTracker',
+    'EntityRecognizer'
 ]
 
-__version__ = '1.1.0'
+__version__ = '1.2.0'
