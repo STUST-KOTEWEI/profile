@@ -1,0 +1,30 @@
+# Dependabot 配置檔案
+# 用於自動更新依賴項
+
+version: 2
+updates:
+  # Python 依賴更新
+  - package-ecosystem: "pip"
+    directory: "/A-Neuro-Semantic-Framework-for-Multi-Modal-Narrative-Immersion"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "python"
+    commit-message:
+      prefix: "deps"
+
+  # GitHub Actions 更新
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci"

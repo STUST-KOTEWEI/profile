@@ -1,0 +1,44 @@
+# EditorConfig 配置
+# 幫助維護跨編輯器的一致編碼風格
+# https://editorconfig.org
+
+root = true
+
+# 所有檔案的預設設定
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+# Python 檔案
+[*.py]
+indent_size = 4
+max_line_length = 88
+
+# YAML 檔案
+[*.{yml,yaml}]
+indent_size = 2
+
+# JSON 檔案
+[*.json]
+indent_size = 2
+
+# Markdown 檔案
+[*.md]
+trim_trailing_whitespace = false
+indent_size = 2
+
+# Makefile
+[Makefile]
+indent_style = tab
+
+# Shell 腳本
+[*.sh]
+indent_size = 2
+
+# JavaScript/TypeScript
+[*.{js,ts,jsx,tsx}]
+indent_size = 2
