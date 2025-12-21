@@ -35,6 +35,35 @@ This module provides comprehensive Natural Language Processing (NLP) capabilitie
 - 空間設定分析（室內、室外、城市、鄉村）
 - 主題識別（冒險、神秘、浪漫、衝突等）
 
+### 6. 多語言支持 (Multi-language Support) 🆕
+- 語言自動檢測（中文、日文、韓文、英文）
+- 多語言情感分析
+- 語言特定的文本統計
+
+### 7. 對話分析 (Dialogue Analysis) 🆕
+- 對話片段提取
+- 說話者識別
+- 對話流程分析
+- 對話情感分析
+
+### 8. 知識圖譜 (Knowledge Graph) 🆕
+- 實體提取（人物、地點、組織、物品）
+- 關係提取（家庭、友誼、敵對等）
+- 圖結構生成
+- 支持 GraphML 和 Cypher 輸出
+
+### 9. 時間軸追蹤 (Timeline Tracking) 🆕
+- 時間標記檢測（過去、現在、未來）
+- 事件提取與排序
+- 敘事時間結構分析
+- 支持 Mermaid 圖表輸出
+
+### 10. 進階命名實體識別 (Advanced NER) 🆕
+- 多類型實體識別（人物、地點、組織、日期、時間等）
+- 上下文感知的實體辨識
+- 基本共指消解
+- 支持 IOB2 格式輸出
+
 ## 安裝 (Installation)
 
 ### 基本安裝
@@ -197,12 +226,12 @@ semantic_analysis/
 ## 未來改進 (Future Improvements)
 
 - [ ] 整合更多預訓練的 Transformer 模型
-- [ ] 添加多語言支持（中文、日文等）
-- [ ] 實現更精確的命名實體識別（NER）
-- [ ] 添加對話分析功能
+- [x] 添加多語言支持（中文、日文等）✅ v1.1.0
+- [x] 實現更精確的命名實體識別（NER）✅ v1.2.0
+- [x] 添加對話分析功能 ✅ v1.1.0
 - [ ] 支持更複雜的關係圖譜
-- [ ] 添加時間軸追蹤
-- [ ] 整合知識圖譜
+- [x] 添加時間軸追蹤 ✅ v1.2.0
+- [x] 整合知識圖譜 ✅ v1.1.0
 
 ## 貢獻 (Contributing)
 
@@ -210,7 +239,9 @@ semantic_analysis/
 
 ## 授權 (License)
 
-此模組是 Project H.O.L.O. 的一部分，用於研究和教育目的。
+此專案使用 MIT 授權條款 - 詳見 [LICENSE](../LICENSE) 檔案。
+
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
 
 ## 聯絡方式 (Contact)
 

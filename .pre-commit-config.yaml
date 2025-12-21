@@ -1,0 +1,53 @@
+# Pre-commit 配置
+# 在提交前自動執行程式碼品質檢查
+# https://pre-commit.com
+
+repos:
+  # 通用 hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+        name: 移除行尾空白
+      - id: end-of-file-fixer
+        name: 確保檔案以換行結尾
+      - id: check-yaml
+        name: 檢查 YAML 語法
+      - id: check-json
+        name: 檢查 JSON 語法
+      - id: check-added-large-files
+        name: 檢查大檔案
+        args: ['--maxkb=1000']
+      - id: check-merge-conflict
+        name: 檢查合併衝突標記
+      - id: detect-private-key
+        name: 檢測私鑰
+
+  # Python 程式碼格式化
+  - repo: https://github.com/psf/black
+    rev: 24.3.0
+    hooks:
+      - id: black
+        name: Black 格式化
+        language_version: python3
+
+  # Python import 排序
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: isort 排序 imports
+        args: ["--profile", "black"]
+
+  # Python 程式碼檢查
+  - repo: https://github.com/pycqa/flake8
+    rev: 7.0.0
+    hooks:
+      - id: flake8
+        name: Flake8 檢查
+        args: ['--max-line-length=88', '--extend-ignore=E203']
+
+# 安裝說明：
+# 1. pip install pre-commit
+# 2. pre-commit install
+# 3. pre-commit run --all-files (可選，檢查所有檔案)

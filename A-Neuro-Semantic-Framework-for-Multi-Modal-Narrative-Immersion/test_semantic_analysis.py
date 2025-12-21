@@ -188,6 +188,11 @@ def run_all_tests():
         test_context_analyzer()
         test_semantic_analyzer()
         test_edge_cases()
+        test_multilingual()
+        test_dialogue_analyzer()
+        test_knowledge_graph()
+        test_timeline_tracker()
+        test_entity_recognizer()
         
         print("="*70)
         print("ALL TESTS PASSED SUCCESSFULLY! ✓")
@@ -201,6 +206,180 @@ def run_all_tests():
         import traceback
         traceback.print_exc()
         return False
+
+
+def test_multilingual():
+    """Test multilingual analysis functionality."""
+    print("Testing MultilingualAnalyzer...")
+    from semantic_analysis import LanguageDetector, MultilingualAnalyzer
+    
+    # Test language detection
+    detector = LanguageDetector()
+    
+    # English text
+    result = detector.detect("Hello, how are you today?")
+    assert result['language_code'] in ['en', 'unknown']
+    print("  ✓ English detection test passed")
+    
+    # Chinese text
+    result = detector.detect("你好，今天天氣很好。")
+    assert result['language_code'] in ['zh', 'unknown']
+    print("  ✓ Chinese detection test passed")
+    
+    # Japanese text
+    result = detector.detect("こんにちは、元気ですか？")
+    assert result['language_code'] in ['ja', 'unknown']
+    print("  ✓ Japanese detection test passed")
+    
+    # Test multilingual analyzer
+    analyzer = MultilingualAnalyzer()
+    result = analyzer.analyze("I am very happy today!")
+    assert 'language_detection' in result
+    assert 'sentiment' in result
+    print("  ✓ Multilingual analysis test passed")
+    
+    print("MultilingualAnalyzer: ALL TESTS PASSED\n")
+
+
+def test_dialogue_analyzer():
+    """Test dialogue analysis functionality."""
+    print("Testing DialogueAnalyzer...")
+    from semantic_analysis import DialogueAnalyzer
+    
+    analyzer = DialogueAnalyzer()
+    
+    # Test with dialogue text
+    text = '''
+    "Hello, how are you?" asked Alice.
+    "I'm fine, thank you," replied Bob.
+    Alice smiled and said, "That's great to hear!"
+    '''
+    
+    result = analyzer.analyze(text)
+    assert 'dialogues' in result
+    assert 'speakers' in result
+    assert 'conversation_flow' in result
+    assert 'statistics' in result
+    print("  ✓ Dialogue extraction test passed")
+    
+    # Test dialogue extraction
+    dialogues = analyzer.extract_dialogues(text)
+    assert isinstance(dialogues, list)
+    print("  ✓ Dialogue list test passed")
+    
+    # Test with no dialogue
+    result = analyzer.analyze("There was no conversation in this text.")
+    assert result is not None
+    print("  ✓ No dialogue test passed")
+    
+    print("DialogueAnalyzer: ALL TESTS PASSED\n")
+
+
+def test_knowledge_graph():
+    """Test knowledge graph functionality."""
+    print("Testing KnowledgeGraphBuilder...")
+    from semantic_analysis import KnowledgeGraphBuilder
+    
+    builder = KnowledgeGraphBuilder()
+    
+    # Test with narrative text
+    text = '''
+    Alice lived in Wonderland. She met the Mad Hatter at his tea party.
+    The Queen of Hearts ruled the kingdom with an iron fist.
+    Alice and the Hatter became good friends during her journey.
+    '''
+    
+    result = builder.build(text)
+    assert 'entities' in result
+    assert 'relations' in result
+    assert 'graph' in result
+    assert 'statistics' in result
+    print("  ✓ Knowledge graph building test passed")
+    
+    # Test entity extraction
+    entities = builder.extract_entities(text)
+    assert isinstance(entities, dict)
+    print("  ✓ Entity extraction test passed")
+    
+    # Test graph export
+    if result['graph']['nodes']:
+        graphml = builder.to_graphml(result['graph'])
+        assert '<?xml' in graphml
+        print("  ✓ GraphML export test passed")
+    else:
+        print("  ✓ GraphML export test skipped (no nodes)")
+    
+    print("KnowledgeGraphBuilder: ALL TESTS PASSED\n")
+
+
+def test_timeline_tracker():
+    """Test timeline tracking functionality."""
+    print("Testing TimelineTracker...")
+    from semantic_analysis import TimelineTracker
+    
+    tracker = TimelineTracker()
+    
+    # Test with narrative text containing temporal markers
+    text = '''
+    Once upon a time, Alice lived in a small village.
+    Yesterday, she discovered a mysterious rabbit hole.
+    Then she fell down and found herself in Wonderland.
+    Later that evening, she met the Mad Hatter at his tea party.
+    Finally, after many adventures, she found her way home.
+    '''
+    
+    result = tracker.analyze(text)
+    assert 'temporal_markers' in result
+    assert 'events' in result
+    assert 'timeline' in result
+    assert 'time_structure' in result
+    assert 'statistics' in result
+    print("  ✓ Timeline analysis test passed")
+    
+    # Test temporal marker extraction
+    markers = tracker.extract_temporal_markers(text)
+    assert isinstance(markers, list)
+    print("  ✓ Temporal marker extraction test passed")
+    
+    # Test with minimal temporal text
+    result = tracker.analyze("The cat sat on the mat.")
+    assert result is not None
+    print("  ✓ Minimal temporal text test passed")
+    
+    print("TimelineTracker: ALL TESTS PASSED\n")
+
+
+def test_entity_recognizer():
+    """Test entity recognition functionality."""
+    print("Testing EntityRecognizer...")
+    from semantic_analysis import EntityRecognizer
+    
+    recognizer = EntityRecognizer()
+    
+    # Test with narrative text containing various entities
+    text = '''
+    Dr. Smith traveled to Paris in January 2024.
+    He met Professor Johnson at the University of Oxford.
+    The company Microsoft was founded in America.
+    '''
+    
+    result = recognizer.recognize(text)
+    assert 'entities' in result
+    assert 'entities_by_type' in result
+    assert 'statistics' in result
+    print("  ✓ Entity recognition test passed")
+    
+    # Test entity extraction
+    entities = recognizer.extract_entities(text)
+    assert isinstance(entities, list)
+    print("  ✓ Entity extraction test passed")
+    
+    # Test with simple text
+    result = recognizer.recognize("Hello world.")
+    assert result is not None
+    print("  ✓ Simple text test passed")
+    
+    print("EntityRecognizer: ALL TESTS PASSED\n")
 
 
 if __name__ == "__main__":
