@@ -38,7 +38,3 @@ indent_style = tab
 # Shell 腳本
 [*.sh]
 indent_size = 2
-
-# JavaScript/TypeScript
-[*.{js,ts,jsx,tsx}]
-indent_size = 2
