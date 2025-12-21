@@ -333,7 +333,9 @@ class KnowledgeGraphBuilder:
             'entity_types': entity_types,
             'relation_types': relation_types,
             'top_entities': top_entities,
-            'graph_density': len(relations) / (len(entities) * (len(entities) - 1)) if len(entities) > 1 else 0
+            # Graph density for directed graph: edges / (nodes * (nodes - 1))
+            'graph_density': len(relations) / (len(entities) * (len(entities) - 1)) if len(entities) > 1 else 0,
+            'is_directed': True  # Mark as directed graph
         }
     
     def _entity_to_dict(self, entity: Entity) -> Dict[str, Any]:
@@ -356,6 +358,22 @@ class KnowledgeGraphBuilder:
             'context': relation.context
         }
     
+    def _escape_cypher_string(self, value: str) -> str:
+        """
+        Escape a string for safe use in Cypher queries.
+        
+        Args:
+            value: String to escape
+            
+        Returns:
+            Escaped string safe for Cypher queries
+        """
+        # Escape backslashes first, then single quotes
+        escaped = value.replace('\\', '\\\\').replace("'", "\\'")
+        # Remove any potentially dangerous characters
+        escaped = ''.join(c for c in escaped if c.isprintable())
+        return escaped
+    
     def to_cypher(self, graph: Dict[str, Any]) -> str:
         """
         Convert graph to Cypher query for Neo4j.
@@ -368,14 +386,20 @@ class KnowledgeGraphBuilder:
         """
         queries = []
         
-        # Create nodes
+        # Create nodes with escaped values
         for node in graph['nodes']:
-            query = f"CREATE (n:{node['type']} {{id: '{node['id']}', name: '{node['label']}', mentions: {node['size']}}})"
+            escaped_id = self._escape_cypher_string(node['id'])
+            escaped_label = self._escape_cypher_string(node['label'])
+            escaped_type = self._escape_cypher_string(node['type'])
+            query = f"CREATE (n:{escaped_type} {{id: '{escaped_id}', name: '{escaped_label}', mentions: {node['size']}}})"
             queries.append(query)
         
-        # Create relationships
+        # Create relationships with escaped values
         for edge in graph['edges']:
-            query = f"MATCH (a {{id: '{edge['source']}'}}), (b {{id: '{edge['target']}'}}) CREATE (a)-[:{edge['type']}]->(b)"
+            escaped_source = self._escape_cypher_string(edge['source'])
+            escaped_target = self._escape_cypher_string(edge['target'])
+            escaped_rel_type = self._escape_cypher_string(edge['type'])
+            query = f"MATCH (a {{id: '{escaped_source}'}}), (b {{id: '{escaped_target}'}}) CREATE (a)-[:{escaped_rel_type}]->(b)"
             queries.append(query)
         
         return ";\n".join(queries)

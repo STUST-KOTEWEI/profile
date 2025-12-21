@@ -254,7 +254,7 @@ class MultilingualAnalyzer:
             score = 0.5 + (0.5 * pos_count / total)
         elif neg_count > pos_count:
             label = 'NEGATIVE'
-            score = 0.5 + (0.5 * neg_count / total)
+            score = 0.5 - (0.5 * neg_count / total)  # Negative sentiment scores below 0.5
         else:
             label = 'NEUTRAL'
             score = 0.5
