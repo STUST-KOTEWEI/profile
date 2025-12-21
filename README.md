@@ -68,3 +68,7 @@ Email: 4b4g0077@stust.edu.tw / 4b4g0077@office.stust.edu.tw
 電話: 0981614900
 
 GitHub: https://github.com/STUST-KOTEWEI
+
+【授權 (License)】
+
+此專案使用 MIT 授權條款 - 詳見 [LICENSE](LICENSE) 檔案。

@@ -210,7 +210,9 @@ semantic_analysis/
 
 ## 授權 (License)
 
-此模組是 Project H.O.L.O. 的一部分，用於研究和教育目的。
+此專案使用 MIT 授權條款 - 詳見 [LICENSE](../LICENSE) 檔案。
+
+This project is licensed under the MIT License - see the [LICENSE](../LICENSE) file for details.
 
 ## 聯絡方式 (Contact)
 
