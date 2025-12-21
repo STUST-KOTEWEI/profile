@@ -7,6 +7,9 @@ This module provides NLP-based semantic analysis capabilities including:
 - Tone and mood detection
 - Character relationship extraction
 - Story background and context analysis
+- Multi-language support (Chinese, Japanese, Korean, English)
+- Dialogue analysis
+- Knowledge graph construction
 """
 
 from .semantic_analyzer import SemanticAnalyzer
@@ -14,13 +17,20 @@ from .sentiment_analyzer import SentimentAnalyzer
 from .tone_analyzer import ToneAnalyzer
 from .relationship_extractor import RelationshipExtractor
 from .context_analyzer import ContextAnalyzer
+from .multilingual import LanguageDetector, MultilingualAnalyzer
+from .dialogue_analyzer import DialogueAnalyzer
+from .knowledge_graph import KnowledgeGraphBuilder
 
 __all__ = [
     'SemanticAnalyzer',
     'SentimentAnalyzer',
     'ToneAnalyzer',
     'RelationshipExtractor',
-    'ContextAnalyzer'
+    'ContextAnalyzer',
+    'LanguageDetector',
+    'MultilingualAnalyzer',
+    'DialogueAnalyzer',
+    'KnowledgeGraphBuilder'
 ]
 
-__version__ = '1.0.0'
+__version__ = '1.1.0'
