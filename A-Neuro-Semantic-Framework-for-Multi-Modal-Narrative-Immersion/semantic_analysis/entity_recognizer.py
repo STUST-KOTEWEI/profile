@@ -93,7 +93,8 @@ class EntityRecognizer:
                 'patterns': [
                     r'\b(\d{1,2}/\d{1,2}/\d{2,4})\b',
                     r'\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:,?\s+\d{4})?\b',
-                    r'\b(\d{4})\b(?!\s*(?:people|years|times))',
+                    # Year with context - avoid numbers that aren't years
+                    r'(?:in|year|circa|around)\s+(\d{4})\b',
                     r'\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b',
                 ],
                 'context_words': ['on', 'in', 'during', 'since', 'until', 'date'],
@@ -218,7 +219,12 @@ class EntityRecognizer:
         for entity_type, type_info in self.entity_patterns.items():
             for pattern in type_info['patterns']:
                 try:
-                    matches = re.finditer(pattern, text, re.IGNORECASE if entity_type in ['DATE', 'TIME'] else 0)
+                    # Use case-insensitive matching for temporal types (DATE, TIME)
+                    # and case-sensitive for names (PERSON, LOCATION, ORGANIZATION)
+                    # to preserve proper noun detection
+                    case_insensitive_types = ['DATE', 'TIME', 'QUANTITY']
+                    flags = re.IGNORECASE if entity_type in case_insensitive_types else 0
+                    matches = re.finditer(pattern, text, flags)
                     for match in matches:
                         # Get the entity text (use last capturing group)
                         entity_text = match.group(match.lastindex) if match.lastindex else match.group()
@@ -415,23 +421,26 @@ class EntityRecognizer:
         Returns:
             List of (token, tag) tuples
         """
-        # Simple tokenization
-        tokens = text.split()
+        # Tokenize while preserving whitespace information
+        # Use regex to split on whitespace but track positions
+        tokens = []
+        token_positions = []
+        
+        for match in re.finditer(r'\S+', text):
+            tokens.append(match.group())
+            token_positions.append((match.start(), match.end()))
+        
         tags = ['O'] * len(tokens)
         
-        # This is a simplified IOB2 conversion
-        # In production, would need proper tokenization alignment
-        
-        char_to_token = {}
-        char_idx = 0
-        for i, token in enumerate(tokens):
-            for j in range(len(token)):
-                char_to_token[char_idx + j] = i
-            char_idx += len(token) + 1
-        
+        # Map character positions to tokens
         for entity in entities:
-            start_token = char_to_token.get(entity.start_pos)
-            if start_token is not None and start_token < len(tags):
-                tags[start_token] = f'B-{entity.entity_type}'
+            # Find which token(s) this entity spans
+            for i, (start, end) in enumerate(token_positions):
+                # Check if entity start falls within this token
+                if start <= entity.start_pos < end:
+                    tags[i] = f'B-{entity.entity_type}'
+                # Check if entity spans multiple tokens (continuation)
+                elif entity.start_pos < start < entity.end_pos:
+                    tags[i] = f'I-{entity.entity_type}'
         
         return list(zip(tokens, tags))

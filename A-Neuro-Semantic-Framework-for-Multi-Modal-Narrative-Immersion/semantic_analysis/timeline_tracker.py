@@ -54,7 +54,8 @@ class TimelineTracker:
         return {
             'absolute': {
                 'patterns': [
-                    r'\b(\d{4})\b',  # Year
+                    # Year pattern with context - avoid matching standalone numbers
+                    r'\b(?:in|year|circa|around)\s+(\d{4})\b',
                     r'\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2}(?:,?\s+\d{4})?\b',
                     r'\b\d{1,2}/\d{1,2}/\d{2,4}\b',  # Date format
                     r'\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b',
@@ -539,13 +540,17 @@ class TimelineTracker:
         lines = [
             "gantt",
             "    title Narrative Timeline",
-            "    dateFormat YYYY-MM-DD",
+            "    dateFormat X",
+            "    axisFormat %s",
             "    section Events"
         ]
         
         for i, event in enumerate(events):
             # Truncate description for display
-            desc = event.description[:30].replace('"', "'")
-            lines.append(f"    {desc} :e{i}, 2024-01-{i+1:02d}, 1d")
+            desc = event.description[:30].replace('"', "'").replace(':', '-')
+            # Use relative ordering instead of hardcoded dates
+            # Each event takes 1 unit of time in sequence
+            marker = event.temporal_marker if event.temporal_marker else f"Event {i+1}"
+            lines.append(f"    {desc} ({marker}) :e{i}, {i}, 1")
         
         return "\n".join(lines)
